@@ -21,7 +21,18 @@ def pregunta_01():
     214
 
     """
-    return
+
+    f1 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f1.append(lineas)
+
+    s = [int(row[1]) for row in f1]
+
+    return sum(s)
+
 
 
 def pregunta_02():
@@ -39,7 +50,24 @@ def pregunta_02():
     ]
 
     """
-    return
+    from itertools import groupby
+
+    f2 = []
+    dict1 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f2.append(lineas)
+
+    l = sorted([row[0] for row in f2])
+
+    for k, g in groupby(l):
+       a = (k,len(list(g)))
+       dict1.append(a)
+    
+    return dict1
+
 
 
 def pregunta_03():
@@ -57,7 +85,27 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    from operator import itemgetter
+    from itertools import groupby
+
+    f3 = []
+    dict2 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f3.append(lineas)
+
+    l1 = [[row[0], row[1]] for row in f3]
+
+    l1 = sorted(l1, key=itemgetter(0))
+    for k, g in groupby(l1, itemgetter(0)):
+        lista_g = (list(g))
+        b = (k,sum([int(num) for elem in lista_g for num in elem[1]]))
+        dict2.append(b)
+
+    return dict2
 
 
 def pregunta_04():
@@ -82,7 +130,25 @@ def pregunta_04():
     ]
 
     """
-    return
+
+    from itertools import groupby
+
+    f4 = []
+    dict3 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f4.append(lineas)
+    fecha = [row[2] for row in f4]
+    mes = [num[5:7] for num in fecha]
+    l2 = sorted(mes)
+
+    for k, g in groupby(l2):
+        c=(k,len(list(g)))
+        dict3.append(c)
+
+    return dict3
 
 
 def pregunta_05():
@@ -100,7 +166,27 @@ def pregunta_05():
     ]
 
     """
-    return
+
+    from operator import itemgetter
+    from itertools import groupby
+
+    f5 = []
+    dict4 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f5.append(lineas)
+
+    l = [[row[0], row[1]] for row in f5]
+
+    l = sorted(l, key=itemgetter(0))
+    for k1, g1 in groupby(l, itemgetter(0)):
+        lista_g = (list(g1))
+        d= (k1,max([int(num) for elem in lista_g for num in elem[1]]),min([int(num) for elem in lista_g for num in elem[1]]))
+        dict4.append(d)
+    
+    return dict4
 
 
 def pregunta_06():
@@ -125,7 +211,29 @@ def pregunta_06():
     ]
 
     """
-    return
+    from itertools import groupby
+    from operator import itemgetter
+
+    max_min_dict = {}
+    with open('data.csv','r') as f:
+        for line in f:
+            fields = line.split("\t")
+            column = fields[4]
+            elements = column.split(',')
+            values = [int(element.split(':')[1]) for element in elements]
+            key_value_pairs = [tuple(element.split(':')) for element in elements]
+            for key, value in key_value_pairs:
+                value = int(value)
+                if key in max_min_dict:
+                    max_val, min_val = max_min_dict[key][0], max_min_dict[key][1]
+                    max_min_dict[key] = (max(value, max_val), min(value, min_val))
+                else:
+                    max_min_dict[key] = (value, value)
+    max_min_list = [(k, v[1], v[0]) for k, v in max_min_dict.items()]
+    max_min_list.sort()
+
+    return max_min_list
+
 
 
 def pregunta_07():
@@ -149,7 +257,27 @@ def pregunta_07():
     ]
 
     """
-    return
+    from operator import itemgetter
+    from itertools import groupby
+
+    f = []
+    dict6 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f.append(lineas)
+
+    l = [[row[1], row[0]] for row in f]
+
+    l = sorted(l, key=itemgetter(0))
+    for k, g in groupby(l, itemgetter(0)):
+        lista_g = (list(g))
+        a1= (int(k),[num for elem in lista_g for num in elem[1]])
+        dict6.append(a1)
+
+        
+    return dict6
 
 
 def pregunta_08():
@@ -174,7 +302,27 @@ def pregunta_08():
     ]
 
     """
-    return
+
+    from operator import itemgetter
+    from itertools import groupby
+
+    f = []
+    dict7 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f.append(lineas)
+
+    l = [[row[1], row[0]] for row in f]
+
+    l = sorted(l, key=itemgetter(0))
+    for k, g in groupby(l, itemgetter(0)):
+        lista_g = (list(g))
+        a2=((int(k), sorted(list(set([num for elem in lista_g for num in elem[1]])))))
+        dict7.append(a2)
+
+    return dict7
 
 
 def pregunta_09():
@@ -197,7 +345,21 @@ def pregunta_09():
     }
 
     """
-    return
+    count_dict = {}
+    with open('data.csv','r') as f:
+        for line in f:
+            fields = line.split("\t")
+            column = fields[4]
+            elements = column.split(',')
+            key_value_pairs = [tuple(element.split(':')) for element in elements]
+            for key, value in key_value_pairs:
+                if key in count_dict:
+                    count_dict[str(key)] += int(1)
+                else:
+                    count_dict[str(key)] = int(1)
+        
+        count_dict_sorted = dict(sorted(count_dict.items()))
+    return count_dict_sorted
 
 
 def pregunta_10():
@@ -218,8 +380,27 @@ def pregunta_10():
 
 
     """
-    return
 
+    from itertools import groupby
+    from operator import itemgetter
+
+    f = []
+    dict9 = []
+    with open('data.csv', 'r') as file:
+        lineas = file.read().splitlines()
+        for i in lineas:
+            lineas = i.split('\t')
+            f.append(lineas)
+
+
+    l = [[row[0], row[3], row[4]] for row in f]
+
+    for k, g in groupby(l, itemgetter(0,1,2)):
+        lista_g = list(g)
+        b2=(k[0], len([l1 for l2 in [num.split('\t') for elem in lista_g for num in elem][1] for l1 in l2 if l1 != ","]),len([num.split(',') for elem in lista_g for num in elem][2]))
+        dict9.append(b2)
+
+    return dict9
 
 def pregunta_11():
     """
@@ -239,7 +420,22 @@ def pregunta_11():
 
 
     """
-    return
+    with open('data.csv','r') as f:
+        sum_dict = {}
+        for line in f:
+            fields = line.split("\t")
+            letter = fields[0]
+            value = int(fields[1])
+            column = fields[3]
+            letters = column.split(",")
+            for l in letters:
+                if l in sum_dict:
+                    sum_dict[l] += value
+                else:
+                    sum_dict[l] = value
+    
+    return dict(sorted(sum_dict.items()))
+
 
 
 def pregunta_12():
@@ -257,4 +453,16 @@ def pregunta_12():
     }
 
     """
-    return
+    diccionario = {}
+    with open("data.csv", "r") as archivo:
+        for linea in archivo:
+            fields = linea.split("\t")
+            letra = fields[0]
+            column = fields[4]
+            elements = column.split(',')
+            valores = [int(element.split(':')[1]) for element in elements]
+            suma = sum(valores)
+            if letra not in diccionario:
+                diccionario[letra] = 0
+            diccionario[letra] += suma
+    return dict(sorted(diccionario.items()))
